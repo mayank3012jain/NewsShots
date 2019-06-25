@@ -162,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
                     //viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
                     viewPager.getAdapter().notifyDataSetChanged();
                     drawerLayout.closeDrawer(GravityCompat.START);
+                }else if(selectedId == R.id.item_settings){
+                    startActivity(new Intent(getBaseContext(), SettingsActivity.class));
                 }
                 return true;
             }

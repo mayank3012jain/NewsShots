@@ -17,7 +17,9 @@ public class CreateAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!= null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         etID = (EditText)findViewById(R.id.et_ID_create);
         etPassword = (EditText)findViewById(R.id.et_password_create);

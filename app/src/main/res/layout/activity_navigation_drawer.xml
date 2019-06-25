@@ -19,6 +19,13 @@
         android:layout_height="match_parent"
         app:menu="@menu/menu_navigation_drawer"
         android:fitsSystemWindows="true"
-        android:layout_gravity="start"/>
+        android:layout_gravity="start">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Log out"/>
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
