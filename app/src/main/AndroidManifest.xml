@@ -40,9 +40,9 @@
         <activity
             android:name=".WebViewActivity"
             android:label="@string/title_activity_web_view"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".MainActivity"/>
-
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>
