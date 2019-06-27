@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/pref_location_titles"
+        android:entryValues="@array/pref_location_values"
+        android:key="primary_location"
+        android:title="Primary Location"
+        android:summary="Select the primary location."
+        app:iconSpaceReserved="false"
+        />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/multiple_location_allowed"
+        android:title="Allow multiple locations"
+        app:iconSpaceReserved="false"/>
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/pref_location_titles"
+        android:entryValues="@array/pref_location_values"
+        android:key="secondary_location"
+        android:title="Secondary Location"
+        android:dependency="@string/multiple_location_allowed"
+        android:summary="Select the secondary location."
+        app:iconSpaceReserved="false"/>
+
+</PreferenceScreen>
