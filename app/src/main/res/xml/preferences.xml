@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
-        android:defaultValue="1"
+        android:defaultValue="in"
         android:entries="@array/pref_location_titles"
         android:entryValues="@array/pref_location_values"
-        android:key="primary_location"
+        android:key="@string/preference_key_primary_location"
         android:title="Primary Location"
         android:summary="Select the primary location."
         app:iconSpaceReserved="false"
@@ -20,7 +20,7 @@
         android:defaultValue="1"
         android:entries="@array/pref_location_titles"
         android:entryValues="@array/pref_location_values"
-        android:key="secondary_location"
+        android:key="@string/preference_key_secondary_location"
         android:title="Secondary Location"
         android:dependency="@string/multiple_location_allowed"
         android:summary="Select the secondary location."

@@ -40,6 +40,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                 UserInfo userCreated = new UserInfo();
                 userCreated.setUserID(stringID);
                 userCreated.setPassword(stringPassword);
+                userCreated.setPrimaryLocation(getString(R.string.location_value_in));
+                userCreated.setHasSecondaryLocation(false);
                 userDAO.insert(userCreated);
 
                 Toast.makeText(CreateAccountActivity.this, stringID + " ID created", Toast.LENGTH_SHORT).show();

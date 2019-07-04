@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Profile"/>
     <item android:title="Categories">
         <menu>
-            <item android:title="TopHeadlines"/>
-            <item android:title="Tech"/>
+            <item android:title="Top Headlines"/>
+            <item android:title="Technology"/>
+            <item android:title="Business"/>
         </menu>
     </item>
 
     <item android:title="Location">
         <menu>
-            <item android:title="USA"
-                android:id="@+id/item_location_USA"/>
+            <item android:title="@string/location_title_in"
+                android:id="@+id/item_location_in"/>
+            <item android:title="@string/location_title_us"
+                android:id="@+id/item_location_us"/>
+            <item android:title="@string/location_title_fr"
+                android:id="@+id/item_location_fr"/>
+            <item android:title="@string/location_title_jp"
+                android:id="@+id/item_location_jp"/>
         </menu>
     </item>
     <group android:id="@+id/item_group_settings_help_about">

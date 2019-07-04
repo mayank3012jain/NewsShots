@@ -28,7 +28,7 @@ public class LoginPageActivity extends AppCompatActivity {
         etID = (EditText)findViewById((R.id.et_ID));
         etPassword = (EditText)findViewById(R.id.et_password);
 
-        prefer = this.getSharedPreferences("myPrefs", MODE_PRIVATE);
+        prefer = this.getSharedPreferences(Utils.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,16 +49,18 @@ public class LoginPageActivity extends AppCompatActivity {
                     if (stringPass.equals(passCheck)) {
 
                         SharedPreferences.Editor editor = prefer.edit();
-                        editor.putBoolean(getString(R.string.is_logged_in),true);
+                        editor.putBoolean(Utils.SP_IS_LOGGED_IN,true);
+                        editor.putString(Utils.SP_LOGGED_IN_ID, stringID);
                         editor.apply();
                         Log.d(LOG_TAG, "hi dear");
+
                         Intent startLoggedIn = new Intent(LoginPageActivity.this, MainActivity.class);
                         startLoggedIn.putExtra(Intent.EXTRA_TEXT, etID.getText().toString());
                         startActivity(startLoggedIn);
                         finish();
                     }
                 }else{
-                    Toast.makeText(LoginPageActivity.this, "userr is null", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginPageActivity.this, "User not found. Please try again.", Toast.LENGTH_SHORT).show();
                 }
 
             }

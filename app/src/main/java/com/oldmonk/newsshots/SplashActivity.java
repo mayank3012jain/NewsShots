@@ -15,8 +15,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_page);
 
-        SharedPreferences pref = this.getSharedPreferences("myPrefs",Context.MODE_PRIVATE);
-        Boolean isLoggedIn = pref.getBoolean(getString(R.string.is_logged_in), false);
+        SharedPreferences pref = this.getSharedPreferences(Utils.SHARED_PREFERENCES_NAME,Context.MODE_PRIVATE);
+        Boolean isLoggedIn = pref.getBoolean(Utils.SP_IS_LOGGED_IN, false);
         Log.d(LOG_TAG, "Hello "+isLoggedIn);
 //        startActivity(new Intent(this, SettingsActivity.class));
         if(isLoggedIn){

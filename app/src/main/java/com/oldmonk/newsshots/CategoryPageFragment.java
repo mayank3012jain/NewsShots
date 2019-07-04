@@ -70,6 +70,10 @@ public class CategoryPageFragment extends android.support.v4.app.Fragment {
         this.mLocation = mLocation;
     }
 
+    public String getmLocation() {
+        return mLocation;
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -78,14 +82,14 @@ public class CategoryPageFragment extends android.support.v4.app.Fragment {
      * @return A new instance of fragment CategoryPageFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CategoryPageFragment newInstance(int position, int locationNumber) {
+    public static CategoryPageFragment newInstance(int position,String locationPassed) {
         CategoryPageFragment fragment = new CategoryPageFragment();
         Bundle args = new Bundle();
         //args.putString(CATEGORY, category);
         ArrayList<String> locationList = new ArrayList<String>(2);
         locationList.add("in");
         locationList.add("us");
-        args.putString(LOCATION_ARGS, locationList.get(locationNumber));
+        args.putString(LOCATION_ARGS, locationPassed);
         args.putInt(POSITION, position);
         fragment.setArguments(args);
         return fragment;

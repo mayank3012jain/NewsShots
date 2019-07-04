@@ -21,11 +21,14 @@
         android:fitsSystemWindows="true"
         android:layout_gravity="start">
 
-        <TextView
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="Log out"/>
+            android:gravity="center_horizontal"
+            android:text="Log out"
+            android:layout_margin="0dp"
+            />
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,5 +1,7 @@
 package com.oldmonk.newsshots;
 
+import android.arch.persistence.room.Room;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,8 +17,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.Preference;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -30,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    int mLocation;
+    String mLocation;
+    String mUserID;
+    AppDatabase database;
+    boolean locationChanged;
+    public static String TAG = "locationcrash";
 
 
     @Override
@@ -41,19 +50,26 @@ public class MainActivity extends AppCompatActivity {
         actionBar = (android.support.v7.widget.Toolbar) findViewById(R.id.tb_action_bar_main);
         setSupportActionBar(actionBar);
 
+        mUserID = this.getSharedPreferences(Utils.SHARED_PREFERENCES_NAME, MODE_PRIVATE).getString(Utils.SP_LOGGED_IN_ID, "NoUserpassed");
+        database = Room.databaseBuilder(this, AppDatabase.class, "db-user")
+                .allowMainThreadQueries()
+                .build();
+        UserInfoDAO userDAO = database.getUserInfoDAO();
+        UserInfo currentUser = userDAO.getUserWithID(mUserID);
+        mLocation = currentUser.getPrimaryLocation();
+        locationChanged = false;
+
         drawerLayout = findViewById(R.id.drawer_nv);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, actionBar, R.string.openDrawer, R.string.closeDrawer);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationView = (NavigationView)findViewById(R.id.navigation_view);
         //navigationView.setNavigationItemSelectedListener(this);
-        setupNavigationDrawer();
-
-
+        setupNavigationDrawer(currentUser);
 
         viewPager = (ViewPager)findViewById(R.id.vp_categories);
-        mLocation = CategoryPageFragment.LOCATION_INDIA;
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+
 
         tabLayout= (TabLayout)findViewById(R.id.tl_categories);
         tabLayout.setupWithViewPager(viewPager);
@@ -74,9 +90,8 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int i) {
             CategoryPageFragment item = CategoryPageFragment.newInstance(i, mLocation);
             item.setmPosition(i);
-            item.setmLocation("in");
+            item.setmLocation(mLocation);
             return item;
-            //yahan pe kya daalu
         }
 
         @Override
@@ -101,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemPosition(@NonNull Object object) {
-            if(mLocation==CategoryPageFragment.LOCATION_USA){
+            if(locationChanged){//kya karu
                 return POSITION_NONE;
             }
             return super.getItemPosition(object);
@@ -111,10 +126,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             CategoryPageFragment created = (CategoryPageFragment)super.instantiateItem(container, position);
-            if(mLocation==CategoryPageFragment.LOCATION_USA){
+            if(mLocation!=created.getmLocation()){
                 //List<Fragment> fragmentList = mFragmentManager.getFragments();
                 //CategoryPageFragment temp = (CategoryPageFragment)fragmentList.get(position);
-                created.setmLocation("us");
+                created.setmLocation(mLocation);
             }
             return created;
         }
@@ -151,15 +166,29 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private void setupNavigationDrawer(){
+    private void setupNavigationDrawer(UserInfo currentUser){
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int selectedId = menuItem.getItemId();
-                if(selectedId == R.id.item_location_USA){
-                    //Intent intentToChangeToUS = new Intent(MainActivity.this, )
-                    mLocation = CategoryPageFragment.LOCATION_USA;
-                    //viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+                if(selectedId == R.id.item_location_in){
+                    mLocation = getString(R.string.location_value_in);
+                    locationChanged = true;
+                    viewPager.getAdapter().notifyDataSetChanged();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }else if(selectedId == R.id.item_location_us){
+                    mLocation = getString(R.string.location_value_us);
+                    locationChanged = true;
+                    viewPager.getAdapter().notifyDataSetChanged();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }else if(selectedId == R.id.item_location_fr){
+                    mLocation = getString(R.string.location_value_fr);
+                    locationChanged = true;
+                    viewPager.getAdapter().notifyDataSetChanged();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }else if(selectedId == R.id.item_location_jp){
+                    mLocation = getString(R.string.location_value_jp);
+                    locationChanged = true;
                     viewPager.getAdapter().notifyDataSetChanged();
                     drawerLayout.closeDrawer(GravityCompat.START);
                 }else if(selectedId == R.id.item_settings){
@@ -168,5 +197,23 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        String secLoc = currentUser.getSecondaryLocation();
+        String primLoc = currentUser.getPrimaryLocation();
+        String rIdSecLoc = "item_location_" + secLoc;
+        String rIdPrimLoc = "item_location_" + primLoc;
+
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.getMenu().findItem(R.id.item_location_in).setVisible(false);
+        navigationView.getMenu().findItem(R.id.item_location_us).setVisible(false);
+        navigationView.getMenu().findItem(R.id.item_location_fr).setVisible(false);
+        navigationView.getMenu().findItem(R.id.item_location_jp).setVisible(false);
+
+        navigationView.getMenu().findItem(getResources().getIdentifier(rIdPrimLoc, "id", getPackageName())).setVisible(true);
+        if (currentUser.hasSecondaryLocation()) {
+            navigationView.getMenu().findItem(getResources().getIdentifier(rIdSecLoc, "id", getPackageName())).setVisible(true);
+        }
     }
+
+
 }

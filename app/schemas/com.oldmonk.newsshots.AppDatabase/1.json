@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e76025d018ccdd7056b50b0d0554af29",
+    "identityHash": "05c84c6159e911892217ba9ec2ed4605",
     "entities": [
       {
         "tableName": "UserInfo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userID` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY(`userID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userID` TEXT NOT NULL, `password` TEXT NOT NULL, `primaryLocation` TEXT NOT NULL, `hasSecondaryLocation` INTEGER NOT NULL, `secondaryLocation` TEXT, PRIMARY KEY(`userID`))",
         "fields": [
           {
             "fieldPath": "userID",
@@ -19,6 +19,24 @@
             "columnName": "password",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "primaryLocation",
+            "columnName": "primaryLocation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hasSecondaryLocation",
+            "columnName": "hasSecondaryLocation",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "secondaryLocation",
+            "columnName": "secondaryLocation",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -33,7 +51,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e76025d018ccdd7056b50b0d0554af29\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"05c84c6159e911892217ba9ec2ed4605\")"
     ]
   }
 }

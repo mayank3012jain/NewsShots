@@ -10,6 +10,35 @@ public class UserInfo {
     private String userID;
     @NonNull
     private String password;
+    @NonNull
+    private String primaryLocation;
+    private boolean hasSecondaryLocation;
+    private String secondaryLocation;
+
+    @NonNull
+    public String getPrimaryLocation() {
+        return primaryLocation;
+    }
+
+    public void setPrimaryLocation(@NonNull String primaryLocation) {
+        this.primaryLocation = primaryLocation;
+    }
+
+    public boolean hasSecondaryLocation() {
+        return hasSecondaryLocation;
+    }
+
+    public void setHasSecondaryLocation(boolean hasSecondaryLocation) {
+        this.hasSecondaryLocation = hasSecondaryLocation;
+    }
+
+    public String getSecondaryLocation() {
+        return secondaryLocation;
+    }
+
+    public void setSecondaryLocation(String secondaryLocation) {
+        this.secondaryLocation = secondaryLocation;
+    }
 
     @NonNull
     public String getUserID() {
