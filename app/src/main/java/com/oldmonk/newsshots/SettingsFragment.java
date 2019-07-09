@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.preference.ListPreference;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle bundle, String s) {
         setPreferencesFromResource(R.xml.preferences, s);
 
-
         mListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             AppDatabase database;
             String mUserID;
@@ -43,8 +43,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 UserInfo currentUser = userDAO.getUserWithID(mUserID);
 
                 if (key.equals(getString(R.string.preference_key_primary_location))) {
-                    currentUser.setPrimaryLocation(sharedPreferences.getString(
-                            getString(R.string.preference_key_primary_location), "in"));
+                    String value = sharedPreferences.getString(
+                            getString(R.string.preference_key_primary_location), "in");
+                    currentUser.setPrimaryLocation(value);
+                    ListPreference lp = (ListPreference)findPreference(getString(R.string.preference_key_primary_location));
+                    lp.setSummary("Selected location is "+ value);
+
                 } else if (key.equals(getString(R.string.multiple_location_allowed))) {
                     currentUser.setHasSecondaryLocation(
                             sharedPreferences.getBoolean(key, false)
@@ -55,9 +59,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         );
                     }
                 } else if (key.equals(getString(R.string.preference_key_secondary_location))) {
-                    currentUser.setSecondaryLocation(
-                            sharedPreferences.getString(getString(R.string.preference_key_secondary_location), "us")
-                    );
+                    String value = sharedPreferences.getString(getString(R.string.preference_key_secondary_location), "us");
+                    currentUser.setSecondaryLocation(value);
+                    ListPreference lp = (ListPreference)findPreference(getString(R.string.preference_key_primary_location));
+                    lp.setSummary("Selected location is "+ value);
                 }
                 userDAO.update(currentUser);
 //                Intent startMainActivity = new Intent(getContext(), MainActivity.class);

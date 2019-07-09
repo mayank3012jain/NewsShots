@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     AppDatabase database;
     boolean locationChanged;
     public static String TAG = "locationcrash";
-
+    Button mLogOutNv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,20 @@ public class MainActivity extends AppCompatActivity {
         tabLayout= (TabLayout)findViewById(R.id.tl_categories);
         tabLayout.setupWithViewPager(viewPager);
 
+        mLogOutNv = findViewById(R.id.b_log_out_nv);
+        mLogOutNv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences pref = MainActivity.this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putBoolean(getString(R.string.is_logged_in), false);
+                editor.apply();
+
+                Intent intentLogOut = new Intent(MainActivity.this, LoginPageActivity.class);
+                startActivity(intentLogOut);
+                finish();
+            }
+        });
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter{
@@ -142,20 +157,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == R.id.action_log_out){
-            SharedPreferences pref = MainActivity.this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean(getString(R.string.is_logged_in), false);
-            editor.apply();
-
-            Intent intentLogOut = new Intent(MainActivity.this, LoginPageActivity.class);
-            startActivity(intentLogOut);
-            finish();;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item){
+//        if(item.getItemId() == R.id.action_log_out){
+//            SharedPreferences pref = MainActivity.this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = pref.edit();
+//            editor.putBoolean(getString(R.string.is_logged_in), false);
+//            editor.apply();
+//
+//            Intent intentLogOut = new Intent(MainActivity.this, LoginPageActivity.class);
+//            startActivity(intentLogOut);
+//            finish();;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onBackPressed() {
@@ -198,8 +213,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         String secLoc = currentUser.getSecondaryLocation();
         String primLoc = currentUser.getPrimaryLocation();
+        Log.d(TAG, "setupNavigationDrawer: "+primLoc);
         String rIdSecLoc = "item_location_" + secLoc;
         String rIdPrimLoc = "item_location_" + primLoc;
 
