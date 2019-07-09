@@ -2,9 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Categories">
         <menu>
-            <item android:title="Top Headlines"/>
-            <item android:title="Technology"/>
-            <item android:title="Business"/>
+            <item android:title="Top Headlines"
+                android:id="@+id/item_top_headlines"/>
+            <item android:title="Technology"
+                android:id="@+id/item_tech"/>
+            <item android:title="Business"
+                android:id="@+id/item_business"/>
         </menu>
     </item>
 

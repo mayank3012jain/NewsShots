@@ -208,7 +208,14 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.closeDrawer(GravityCompat.START);
                 }else if(selectedId == R.id.item_settings){
                     startActivity(new Intent(getBaseContext(), SettingsActivity.class));
+                }else if(selectedId == R.id.item_top_headlines){
+                    viewPager.setCurrentItem(0);
+                }else if(selectedId == R.id.item_tech) {
+                    viewPager.setCurrentItem(1);
+                }else if(selectedId == R.id.item_business) {
+                    viewPager.setCurrentItem(2);
                 }
+                onBackPressed();
                 return true;
             }
         });
