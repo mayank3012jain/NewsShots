@@ -49,5 +49,8 @@
     <string name="multiple_location_allowed">Allow multiple locations.</string>
     <string name="preference_key_primary_location">primary_location</string>
     <string name="preference_key_secondary_location">secondary_location</string>
+    <string name="title_activity_about_developer">AboutDeveloperActivity</string>
+    <string name="about_mayank">The app was developed by Mayank, a tech enthusiast and an amateur application developer. For any feedback, suggestions or collaborations email me at:
+    mayank3012jain@gmail.com</string>
 
 </resources>

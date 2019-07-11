@@ -26,6 +26,7 @@
     <group android:id="@+id/item_group_settings_help_about">
             <item android:title="Settings"
                 android:id="@+id/item_settings"/>
-            <item android:title="About Us"/>
+            <item android:title="About Us"
+                android:id="@+id/item_about_us"/>
     </group>
 </menu>

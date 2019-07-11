@@ -214,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(1);
                 }else if(selectedId == R.id.item_business) {
                     viewPager.setCurrentItem(2);
+                }else if(selectedId == R.id.item_about_us){
+                    startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
                 }
                 onBackPressed();
                 return true;

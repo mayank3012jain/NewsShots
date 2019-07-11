@@ -112,6 +112,9 @@ public class CategoryPageFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_category_page, container, false);
         progressBar = (ProgressBar)v.findViewById(R.id.progress_bar_fr);
+        progressBar.setVisibility(View.VISIBLE);
+        rvNewsCards = (RecyclerView)v.findViewById(R.id.rv_news_cards_fr);
+        rvNewsCards.setVisibility(View.GONE);
 
         Context context = getContext();
         inflateRecyclerView(context, v);
@@ -153,14 +156,14 @@ public class CategoryPageFragment extends android.support.v4.app.Fragment {
 
         final String requiredUrlWithCountry = requiredUri.toString();
 
-        String urlTopNews = "https://newsapi.org/v2/top-headlines?country=in&apiKey=075a6e95ccd443bab794e6a96e2ecfcf";
-        String urlTech = "https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=075a6e95ccd443bab794e6a96e2ecfcf";
-        String urlBus = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=075a6e95ccd443bab794e6a96e2ecfcf";
-        urlList.add(urlTopNews);
-        urlList.add(urlTech);
-        urlList.add(urlBus);
-
-        String url = urlList.get(mPosition);
+//        String urlTopNews = "https://newsapi.org/v2/top-headlines?country=in&apiKey=075a6e95ccd443bab794e6a96e2ecfcf";
+//        String urlTech = "https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=075a6e95ccd443bab794e6a96e2ecfcf";
+//        String urlBus = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=075a6e95ccd443bab794e6a96e2ecfcf";
+//        urlList.add(urlTopNews);
+//        urlList.add(urlTech);
+//        urlList.add(urlBus);
+//
+//        String url = urlList.get(mPosition);
 
         JsonObjectRequest jsonObjectRequest;
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET, requiredUrlWithCountry, null,
@@ -184,7 +187,7 @@ public class CategoryPageFragment extends android.support.v4.app.Fragment {
 
                                 progressBar.setVisibility(View.GONE);
 
-                                rvNewsCards = (RecyclerView)v.findViewById(R.id.rv_news_cards_fr);
+
                                 rvNewsCards.setVisibility(View.VISIBLE);
                                 rvNewsCards.setLayoutManager(new LinearLayoutManager(getContext()));
                                 ArrayList<News> news = News.getNewsFromJsonArray(articles, numberOfArticles);
